@@ -9,10 +9,10 @@ import (
 
 var (
 	userName  string = "root"
-	password  string = "root"
-	ipAddrees string = ""
+	password  string = "jiang123"
+	ipAddrees string = "9.135.235.149"
 	port      int    = 3306
-	dbName    string = "cma"
+	dbName    string = "db_info"
 	charset   string = "utf8"
 )
 
@@ -35,13 +35,13 @@ func IdCreate(data model.Data) {
 	}
 }
 
-func CIdSearch(cid string) []model.Data {
+func CIdSearch(cid string) ([]model.Data, error) {
 	var data []model.Data
 	err := Db.Select(&data, "select * from id_info where cid = ? ", cid)
 	if err != nil {
 		fmt.Printf("MultiIdSearch have wrong")
 	}
-	return data
+	return data, err
 }
 
 func RouteIdSearch(rid string) []model.Data {
