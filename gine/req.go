@@ -18,7 +18,6 @@ func GinInit() {
 
 	*/
 
-	//锻炼记录输入
 	r.GET("/store", func(c *gin.Context) {
 
 		var data model.Data
