@@ -44,11 +44,11 @@ func CIdSearch(cid string) ([]model.Data, error) {
 	return data, err
 }
 
-func RouteIdSearch(rid string) []model.Data {
+func RouteIdSearch(rid string) ([]model.Data, error) {
 	var data []model.Data
 	err := Db.Select(&data, "select * from id_info where route_id = ? ", rid)
 	if err != nil {
 		fmt.Printf("RouteIdSearch have wrong")
 	}
-	return data
+	return data,err
 }
