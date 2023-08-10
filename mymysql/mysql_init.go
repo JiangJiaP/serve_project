@@ -8,11 +8,11 @@ import (
 )
 
 var (
-	userName  string = "root"
-	password  string = "jiang123"
-	ipAddrees string = "9.135.235.149"
+	userName  string = "myuser"
+	password  string = "mypassword"
+	ipAddrees string = "localhost"
 	port      int    = 3306
-	dbName    string = "db_info"
+	dbName    string = "mydatabase"
 	charset   string = "utf8"
 )
 
@@ -50,5 +50,5 @@ func RouteIdSearch(rid string) ([]model.Data, error) {
 	if err != nil {
 		fmt.Printf("RouteIdSearch have wrong")
 	}
-	return data,err
+	return data, err
 }
