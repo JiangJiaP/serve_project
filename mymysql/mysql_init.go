@@ -8,28 +8,29 @@ import (
 )
 
 var (
-	userName  string = "myuser"
-	password  string = "mypassword"
-	ipAddrees string = "localhost"
-	port      int    = 3306
-	dbName    string = "mydatabase"
-	charset   string = "utf8"
+	userName string = "myuser"
+	password string = "mypassword"
+	//ipAddrees string = "localhost"
+	port    int    = 3306
+	dbName  string = "mydatabase"
+	charset string = "utf8"
 )
 
 var Db *sqlx.DB
 
-func My_init() {
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=%s", userName, password, ipAddrees, port, dbName, charset)
+func My_init(ipAddress string) error {
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=%s", userName, password, ipAddress, port, dbName, charset)
 	var err error
 	Db, err = sqlx.Open("mysql", dsn)
 	if err != nil {
 		fmt.Printf("mysql connect failed, detail is [%v]", err.Error())
 	}
+	return err
 }
 
 // cid   route_id  multi_id
 func IdCreate(data model.Data) {
-	err, _ := Db.Exec("insert into id_info values (?,?,?)", data.CId, data.RouteId, data.MultiId)
+	_, err := Db.Exec("insert into id_info values (?,?,?)", data.CId, data.RouteId, data.MultiId)
 	if err != nil {
 		fmt.Printf("IdCreate have wrong")
 	}

@@ -17,6 +17,19 @@ func GinInit() {
 			4. rid 获得多维表示
 
 	*/
+	r.GET("/mysql_init", func(c *gin.Context) {
+		mysqlPath := c.Query("address")
+
+		err := mymysql.My_init(mysqlPath)
+		state := "ok"
+		if err != nil {
+			state = "fail"
+		}
+		c.JSON(http.StatusOK, gin.H{
+			"state": state,
+		})
+
+	})
 
 	r.GET("/store", func(c *gin.Context) {
 
@@ -60,7 +73,7 @@ func GinInit() {
 		var cId string
 		if err != nil {
 			errNo = "1"
-		}else {
+		} else {
 			if len(datas) == 0 {
 				errNo = "1"
 			} else {
@@ -69,8 +82,8 @@ func GinInit() {
 		}
 
 		c.JSON(http.StatusOK, gin.H{
-			"err_no" : errNo,
-			"cid": cId,
+			"err_no": errNo,
+			"cid":    cId,
 		})
 
 	})
@@ -83,7 +96,7 @@ func GinInit() {
 
 		if err != nil {
 			errNo = "1"
-		}else {
+		} else {
 			if len(datas) == 0 {
 				errNo = "1"
 			} else {
@@ -92,7 +105,7 @@ func GinInit() {
 		}
 
 		c.JSON(http.StatusOK, gin.H{
-			"err_no" : errNo,
+			"err_no":   errNo,
 			"multi_id": multiId,
 		})
 	})
@@ -105,7 +118,7 @@ func GinInit() {
 
 		if err != nil {
 			errNo = "1"
-		}else {
+		} else {
 			if len(datas) == 0 {
 				errNo = "1"
 			} else {
@@ -114,7 +127,7 @@ func GinInit() {
 		}
 
 		c.JSON(http.StatusOK, gin.H{
-			"err_no" : errNo,
+			"err_no":   errNo,
 			"multi_id": multiId,
 		})
 
