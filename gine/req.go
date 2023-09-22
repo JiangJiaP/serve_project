@@ -37,6 +37,8 @@ func GinInit() {
 		data.MultiId = c.Query("multi_id")
 		data.RouteId = c.Query("route_id")
 		data.CId = c.Query("cid")
+		data.Ifi = c.Query("ifi")
+		data.MacId = c.Query("mac")
 
 		mymysql.IdCreate(data)
 
