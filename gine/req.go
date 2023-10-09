@@ -142,5 +142,35 @@ func GinInit() {
 
 	})
 
+	r.GET("/get_cid_from_multi_id",func(c *gin.Context){
+		var data model.Data
+		var errNo string
+		var cid string
+		data.UserId = c.Query("user_id")
+		data.DeviceId = c.Query("device_id")
+		data.AddressId = c.Query("address_id")
+		data.ServiceId = c.Query("service_id")
+		data.DataId = c.Query("data_id")
+
+		datas, err := mymysql.CIdSearchByMid(data)
+		if err != nil {
+			errNo = "1"
+		} else {
+			if len(datas) == 0 {
+				errNo = "1"
+			} else {
+				cid = datas[0].CId
+			}
+		}
+
+		c.JSON(http.StatusOK,gin.H{
+			"err_no":   errNo,
+			"cid": cid,
+		})
+
+
+
+	})
+
 	r.Run()
 }

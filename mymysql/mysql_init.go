@@ -45,6 +45,24 @@ func CIdSearch(cid string) ([]model.Data, error) {
 	return data, err
 }
 
+func CIdSearchByMid(data model.Data) ([]model.Data, error) {
+	var redata []model.Data
+	var err error
+	if data.DeviceId == "" {
+		err = Db.Select(redata,"select * from id_info where multi_id LIKE ? and multi_id LIKE ? and multi_id LIKE ? and multi_id LIKE ? and multi_id LIKE ?", "%"+data.UserId+"%", "%"+data.DataId+"%", "%"+data.MacId+"%", "%"+data.ServiceId+"%")
+		if err != nil {
+			fmt.Printf("MultiIdSearch have wrong")
+		}
+	}else {
+		err = Db.Select(redata,"select * from id_info where multi_id LIKE ? and multi_id LIKE ? and multi_id LIKE ? and multi_id LIKE ? and multi_id LIKE ?", "%"+data.UserId+"%", "%"+data.DataId+"%", "%"+data.MacId+"%", "%"+data.ServiceId+"%","%"+data.DeviceId+"%")
+		if err != nil {
+			fmt.Printf("MultiIdSearch have wrong")
+		}
+	}
+
+	return redata, err
+}
+
 func RouteIdSearch(rid string) ([]model.Data, error) {
 	var data []model.Data
 	err := Db.Select(&data, "select * from id_info where route_id = ? ", rid)
