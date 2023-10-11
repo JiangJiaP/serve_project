@@ -30,7 +30,7 @@ func My_init(ipAddress string) error {
 
 // cid   route_id  multi_id
 func IdCreate(data model.Data) {
-	_, err := Db.Exec("insert into id_info values (?,?,?,?,?)", data.CId, data.RouteId, data.MultiId, data.Ifi, data.MacId)
+	_, err := Db.Exec("insert into id_info values (?,?,?,?,?)", data.CId, data.RouteId, data.MultiId, data.MacId,data.Ifi)
 	if err != nil {
 		fmt.Printf("IdCreate have wrong")
 	}
