@@ -10,5 +10,5 @@ type Data struct {
 	UserId string `db:"user_id"`
 	CId     string `db:"cid"`
 	MacId   string `db:"mac_id"`
-	Ifi     string `db:"ifi"`
+	Ifn     string `db:"ifn"`
 }
