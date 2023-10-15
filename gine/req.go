@@ -64,7 +64,7 @@ func GinInit() {
 			} else {
 				routeId = datas[0].RouteId
 				mac = datas[0].MacId
-				ifi, _ = strconv.Atoi(datas[0].Ifi)
+				ifi, _ = strconv.Atoi(datas[0].Ifn)
 			}
 		}
 		c.JSON(http.StatusOK, gin.H{
