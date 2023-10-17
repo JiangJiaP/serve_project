@@ -49,11 +49,11 @@ func GinInit() {
 
 	})
 
-	r.GET("/get_route_id_mac_ifi_from_cid", func(c *gin.Context) {
+	r.GET("/get_route_id_mac_ifn_from_cid", func(c *gin.Context) {
 		cId := c.Query("cid")
 		var routeId string
 		var mac string
-		var ifi int
+		var ifn int
 		errNo := "0"
 		datas, err := mymysql.CIdSearch(cId)
 		if err != nil {
@@ -64,14 +64,14 @@ func GinInit() {
 			} else {
 				routeId = datas[0].RouteId
 				mac = datas[0].MacId
-				ifi, _ = strconv.Atoi(datas[0].Ifn)
+				ifn, _ = strconv.Atoi(datas[0].Ifn)
 			}
 		}
 		c.JSON(http.StatusOK, gin.H{
 			"err_no":   errNo,
 			"route_id": routeId,
 			"mac":      mac,
-			"ifi":      ifi,
+			"ifn":      ifn,
 		})
 
 	})
