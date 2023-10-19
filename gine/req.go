@@ -3,7 +3,6 @@ package gine
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"strconv"
 	"utahw/model"
 	"utahw/mymysql"
 )
@@ -53,7 +52,7 @@ func GinInit() {
 		cId := c.Query("cid")
 		var routeId string
 		var mac string
-		var ifn int
+		var ifn string
 		errNo := "0"
 		datas, err := mymysql.CIdSearch(cId)
 		if err != nil {
@@ -64,7 +63,7 @@ func GinInit() {
 			} else {
 				routeId = datas[0].RouteId
 				mac = datas[0].MacId
-				ifn, _ = strconv.Atoi(datas[0].Ifn)
+				ifn = datas[0].Ifn
 			}
 		}
 		c.JSON(http.StatusOK, gin.H{
