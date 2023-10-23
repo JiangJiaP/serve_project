@@ -171,21 +171,27 @@ func GinInit() {
 
 	r.GET("/get_sonic_ip", func(c *gin.Context) {
 		var errNo string
-//		datas ,err := mymysql.IpAddrSearchAllFromRouter()
-//		if err != nil {
-//			errNo = "1"
-//		}
-		datas := []model.RouterData{
-			{"Router1", "192.168.1.1"},
-			{"Router2", "192.168.1.2"},
+		datas ,err := mymysql.IpAddrSearchAllFromRouter()
+		if err != nil {
+			errNo = "1"
 		}
-
-
 
 		c.JSON(http.StatusOK,gin.H{
 			"err_no" : errNo,
 			"datas" : datas,
 		})
+	})
+
+	r.GET("/store_sonic_router", func(c *gin.Context) {
+		var data model.RouterData
+		data.Router = c.Query("router")
+		data.IpAddr = c.Query("ipaddr")
+
+		mymysql.SonicRouterStore(data)
+		c.JSON(http.StatusOK,gin.H{
+			"state" : "ok",
+		})
+
 	})
 
 	r.Run()

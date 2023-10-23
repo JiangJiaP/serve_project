@@ -80,3 +80,10 @@ func IpAddrSearchAllFromRouter()([]model.RouterData,error)  {
 	}
 	return Rdata,err
 }
+
+func SonicRouterStore(data model.RouterData){
+	_ , err := Db.Exec("insert into sonic_info values (?,?)",data.Router,data.IpAddr)
+	if err != nil {
+		fmt.Printf("SonicRouterStore have wrong")
+	}
+}
