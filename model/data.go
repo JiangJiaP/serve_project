@@ -14,6 +14,6 @@ type Data struct {
 }
 
 type RouterData struct {
-	Router string `db:"router"`
-	IpAddr string `db:"ip_addr"`
+	Router string `db:"router" json:"Router"`
+	IpAddr string `db:"ip_addr"  json:"IPv6Addr"`
 }
