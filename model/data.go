@@ -12,3 +12,8 @@ type Data struct {
 	MacId   string `db:"mac_id"`
 	Ifn     string `db:"ifn"`
 }
+
+type RouterData struct {
+	Router string `db:"router"`
+	IpAddr string `db:"ip_addr"`
+}

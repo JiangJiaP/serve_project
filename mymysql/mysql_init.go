@@ -71,3 +71,12 @@ func RouteIdSearch(rid string) ([]model.Data, error) {
 	}
 	return data, err
 }
+
+func IpAddrSearchFromRouter(r string)([]model.RouterData,error)  {
+	var Rdata []model.RouterData
+	err := Db.Select(&Rdata,"select * from sonic_info where router = ?",r)
+	if err != nil {
+		fmt.Printf("RouteIdSearch have wrong")
+	}
+	return Rdata,err
+}

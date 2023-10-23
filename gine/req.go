@@ -166,9 +166,26 @@ func GinInit() {
 			"err_no":   errNo,
 			"cid": cid,
 		})
+	})
 
 
+	r.GET("/get_sonic_ip", func(c *gin.Context) {
+		var r string
+		var errNo string
+		r = c.Query("router")
+		datas ,err := mymysql.IpAddrSearchFromRouter(r)
+		if err != nil {
+			errNo = "1"
+		}
+		var ipAddrs []string
 
+		for i := 0; i < len(datas); i++ {
+			ipAddrs = append(ipAddrs, datas[i].Router)
+		}
+		c.JSON(http.StatusOK,gin.H{
+			"err_no" : errNo,
+			"ipAddr" : ipAddrs,
+		})
 	})
 
 	r.Run()
