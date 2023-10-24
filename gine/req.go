@@ -182,16 +182,21 @@ func GinInit() {
 		})
 	})
 
-	r.GET("/store_sonic_router", func(c *gin.Context) {
+	r.POST("/store_sonic_router", func(c *gin.Context) {
 		var data model.RouterData
-		data.Router = c.Query("router")
-		data.IpAddr = c.Query("ipaddr")
+
+		// 解析请求正文中的JSON 数据
+		if err := c.ShouldBindJSON(&data); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"err_no": "error",
+			})
+			return
+		}
 
 		mymysql.SonicRouterStore(data)
-		c.JSON(http.StatusOK,gin.H{
-			"state" : "ok",
+		c.JSON(http.StatusOK, gin.H{
+			"state": "ok",
 		})
-
 	})
 
 	r.Run()
