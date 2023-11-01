@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"utahw/model"
 	"utahw/mymysql"
+	"utahw/service"
 )
 
 func GinInit() {
@@ -141,7 +142,7 @@ func GinInit() {
 
 	})
 
-	r.GET("/get_cid_from_multi_id",func(c *gin.Context){
+	r.GET("/get_cid_from_multi_id", func(c *gin.Context) {
 		var data model.Data
 		var errNo string
 		var cid string
@@ -162,23 +163,22 @@ func GinInit() {
 			}
 		}
 
-		c.JSON(http.StatusOK,gin.H{
-			"err_no":   errNo,
-			"cid": cid,
+		c.JSON(http.StatusOK, gin.H{
+			"err_no": errNo,
+			"cid":    cid,
 		})
 	})
 
-
 	r.GET("/get_sonic_ip", func(c *gin.Context) {
 		var errNo string
-		datas ,err := mymysql.IpAddrSearchAllFromRouter()
+		datas, err := mymysql.IpAddrSearchAllFromRouter()
 		if err != nil {
 			errNo = "1"
 		}
 
-		c.JSON(http.StatusOK,gin.H{
-			"err_no" : errNo,
-			"datas" : datas,
+		c.JSON(http.StatusOK, gin.H{
+			"err_no": errNo,
+			"datas":  datas,
 		})
 	})
 
@@ -197,6 +197,41 @@ func GinInit() {
 		c.JSON(http.StatusOK, gin.H{
 			"state": "ok",
 		})
+	})
+
+	r.POST("/connect", func(c *gin.Context) {
+		var data model.ConnectData
+
+		if err := c.ShouldBindJSON(&data); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"err_no": "error",
+			})
+			return
+		}
+
+		dcidInfo, err := mymysql.CIdSearch(data.Dcid)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"err_no": "error",
+			})
+		}
+
+		routerInfo, err := mymysql.SonicRouterSearchFromIpaddress(dcidInfo[0].RouteId)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"err_no": "error",
+			})
+		}
+
+		scidInfo, err := mymysql.CIdSearch(data.Scid)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"err_no": "error",
+			})
+		}
+
+		service.ConnectServicePost(scidInfo[0], dcidInfo[0], routerInfo[0].IpAddr+":40002/inner_connect")
+
 	})
 
 	r.Run()

@@ -87,3 +87,13 @@ func SonicRouterStore(data model.RouterData){
 		fmt.Printf("SonicRouterStore have wrong")
 	}
 }
+
+func SonicRouterSearchFromIpaddress(ipAddress string) ([]model.RouterData,error) {
+	var Rdata []model.RouterData
+	err := Db.Select(&Rdata,"select * from sonic_info where ip_addr = ?", ipAddress)
+	if err != nil {
+		fmt.Printf("RouteIdSearch have wrong")
+	}
+	return Rdata,err
+
+}
