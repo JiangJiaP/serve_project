@@ -232,6 +232,8 @@ func GinInit() {
 
 		service.ConnectServicePost(scidInfo[0], dcidInfo[0], routerInfo[0].IpAddr+":40002/inner_connect")
 
+		//连接泽军的
+
 	})
 
 	r.Run()
