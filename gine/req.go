@@ -230,11 +230,11 @@ func GinInit() {
 			})
 		}
 
-		service.ConnectServicePost(scidInfo[0], dcidInfo[0], "http://"+routerInfo[0].Router+":40002")
+		errno := service.ConnectServicePost(scidInfo[0], dcidInfo[0], "http://"+routerInfo[0].Router+":40002")
 
 		//连接泽军的
 		c.JSON(http.StatusOK,gin.H{
-			"err_no" :""
+			"err_no" : errno,
 		})
 
 	})
