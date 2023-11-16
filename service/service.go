@@ -16,7 +16,7 @@ func decodeMultiData(jsonData string) (model.MultiData, error) {
 	return multiData, err
 }
 
-func ConnectServicePost(scidInfo model.Data, dcidInfo model.Data, url string) {
+func ConnectServicePost(scidInfo model.Data, dcidInfo model.Data, url string)(errno string){
 
 
 
@@ -50,6 +50,7 @@ func ConnectServicePost(scidInfo model.Data, dcidInfo model.Data, url string) {
 	resp, err := http.Post(url, "application/json", bytes.NewBuffer(requestBody))
 	if err != nil {
 		fmt.Println("POST请求失败:", err)
+		errno = "400"
 		return
 	}
 	defer resp.Body.Close()
@@ -57,10 +58,14 @@ func ConnectServicePost(scidInfo model.Data, dcidInfo model.Data, url string) {
 	// 读取响应体
 	var response map[string]string
 	err = json.NewDecoder(resp.Body).Decode(&response)
+
 	if err != nil {
 		fmt.Println("响应解码失败:", err)
+		errno = "400"
 		return
 	}
+	errno = response["err_no"]
 
 	fmt.Println("响应体:", response)
+	return errno
 }
