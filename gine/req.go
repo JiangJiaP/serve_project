@@ -230,7 +230,7 @@ func GinInit() {
 			})
 		}
 
-		service.ConnectServicePost(scidInfo[0], dcidInfo[0], routerInfo[0].Router+":40002")
+		service.ConnectServicePost(scidInfo[0], dcidInfo[0], "http://"+routerInfo[0].Router+":40002")
 
 		//连接泽军的
 
