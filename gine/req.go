@@ -8,6 +8,8 @@ import (
 	"utahw/service"
 )
 
+var StrategyAddress string
+
 func GinInit() {
 	r := gin.Default()
 	/*
@@ -18,9 +20,9 @@ func GinInit() {
 			4. rid 获得多维表示
 
 	*/
-	r.GET("/mysql_init", func(c *gin.Context) {
-		mysqlPath := c.Query("address")
-
+	r.GET("/address_init", func(c *gin.Context) {
+		mysqlPath := c.Query("mysql_address")
+		StrategyAddress = c.Query("strategy_address")
 		err := mymysql.My_init(mysqlPath)
 		state := "ok"
 		if err != nil {
@@ -31,6 +33,8 @@ func GinInit() {
 		})
 
 	})
+
+	r.GET("")
 
 	r.GET("/store", func(c *gin.Context) {
 
@@ -233,8 +237,12 @@ func GinInit() {
 		errno := service.ConnectServicePost(scidInfo[0], dcidInfo[0], "http://"+routerInfo[0].Router+":40002")
 
 		//连接泽军的
-		c.JSON(http.StatusOK,gin.H{
-			"err_no" : errno,
+		if len(StrategyAddress) != 0 {
+			service.SendStrategyServe(scidInfo[0].CId, dcidInfo[0].CId, StrategyAddress)
+		}
+
+		c.JSON(http.StatusOK, gin.H{
+			"err_no": errno,
 		})
 
 	})
