@@ -238,7 +238,7 @@ func GinInit() {
 
 		//连接泽军的
 		if len(StrategyAddress) != 0 {
-			service.SendStrategyServe(scidInfo[0].CId, dcidInfo[0].CId, StrategyAddress)
+			service.SendStrategyServe(scidInfo[0].CId, dcidInfo[0].CId, "http://"+StrategyAddress+"/auth/policy/publishACL")
 		}
 
 		c.JSON(http.StatusOK, gin.H{
