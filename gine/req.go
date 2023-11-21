@@ -34,7 +34,6 @@ func GinInit() {
 
 	})
 
-	r.GET("")
 
 	r.GET("/store", func(c *gin.Context) {
 
