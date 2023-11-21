@@ -145,15 +145,22 @@ func GinInit() {
 
 	})
 
-	r.GET("/get_cid_from_multi_id", func(c *gin.Context) {
-		var data model.Data
+	r.POST("/get_cid_from_multi_id", func(c *gin.Context) {
+		var MultiData model.MultiData
 		var errNo string
 		var cid string
-		data.UserId = c.Query("user_id")
-		data.DeviceId = c.Query("device_id")
-		data.AddressId = c.Query("address_id")
-		data.ServiceId = c.Query("service_id")
-		data.DataId = c.Query("data_id")
+		if err := c.ShouldBindJSON(&MultiData); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"err_no": "error",
+			})
+			return
+		}
+		var data model.Data
+		data.UserId = MultiData.UserId
+		data.DeviceId = MultiData.DeviceId
+		data.AddressId = MultiData.AddressId
+		data.ServiceId = MultiData.ServiceId
+		data.DataId = MultiData.DataId
 
 		datas, err := mymysql.CIdSearchByMid(data)
 		if err != nil {
