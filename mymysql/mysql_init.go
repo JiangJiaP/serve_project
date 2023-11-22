@@ -49,7 +49,7 @@ func CIdSearchByMid(data model.Data) ([]model.Data, error) {
 	var redata []model.Data
 	var err error
 	if data.DeviceId == "" {
-		err = Db.Select(&redata,"select * from id_info where multi_id LIKE ? and multi_id LIKE ? and multi_id LIKE ? and multi_id LIKE ? and multi_id LIKE ?", "%"+data.UserId+"%", "%"+data.DataId+"%", "%"+data.MacId+"%", "%"+data.ServiceId+"%")
+		err = Db.Select(&redata,"select * from id_info where multi_id LIKE ? and multi_id LIKE ? and multi_id LIKE ? and multi_id LIKE ?", "%"+data.UserId+"%", "%"+data.DataId+"%", "%"+data.MacId+"%", "%"+data.ServiceId+"%")
 		if err != nil {
 			fmt.Printf("MultiIdSearch have wrong")
 		}
