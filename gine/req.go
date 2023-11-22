@@ -148,7 +148,7 @@ func GinInit() {
 	r.POST("/get_cid_from_multi_id", func(c *gin.Context) {
 		var MultiData model.MultiData
 		var errNo string
-		var cid string
+		var cids []string
 		if err := c.ShouldBindJSON(&MultiData); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{
 				"err_no": "error",
@@ -163,19 +163,22 @@ func GinInit() {
 		data.DataId = MultiData.DataId
 
 		datas, err := mymysql.CIdSearchByMid(data)
+
 		if err != nil {
 			errNo = "1"
 		} else {
 			if len(datas) == 0 {
 				errNo = "1"
 			} else {
-				cid = datas[0].CId
+				for _, d := range datas{
+					cids = append(cids,d.CId)
+				}
 			}
 		}
 
 		c.JSON(http.StatusOK, gin.H{
 			"err_no": errNo,
-			"cid":    cid,
+			"cids":    cids,
 		})
 	})
 
