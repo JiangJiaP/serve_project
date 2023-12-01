@@ -34,7 +34,6 @@ func GinInit() {
 
 	})
 
-
 	r.GET("/store", func(c *gin.Context) {
 
 		var data model.Data
@@ -57,6 +56,7 @@ func GinInit() {
 		var routeId string
 		var mac string
 		var ifn string
+		var serviceId string
 		errNo := "0"
 		datas, err := mymysql.CIdSearch(cId)
 		if err != nil {
@@ -68,13 +68,15 @@ func GinInit() {
 				routeId = datas[0].RouteId
 				mac = datas[0].MacId
 				ifn = datas[0].Ifn
+				serviceId = datas[0].ServiceId
 			}
 		}
 		c.JSON(http.StatusOK, gin.H{
-			"err_no":   errNo,
-			"route_id": routeId,
-			"mac":      mac,
-			"ifn":      ifn,
+			"err_no":     errNo,
+			"route_id":   routeId,
+			"mac":        mac,
+			"ifn":        ifn,
+			"service_id": serviceId,
 		})
 
 	})
@@ -170,15 +172,15 @@ func GinInit() {
 			if len(datas) == 0 {
 				errNo = "1"
 			} else {
-				for _, d := range datas{
-					cids = append(cids,d.CId)
+				for _, d := range datas {
+					cids = append(cids, d.CId)
 				}
 			}
 		}
 
 		c.JSON(http.StatusOK, gin.H{
 			"err_no": errNo,
-			"cids":    cids,
+			"cids":   cids,
 		})
 	})
 
