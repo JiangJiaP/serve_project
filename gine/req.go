@@ -1,6 +1,7 @@
 package gine
 
 import (
+	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"utahw/model"
@@ -71,12 +72,20 @@ func GinInit() {
 				serviceId = datas[0].ServiceId
 			}
 		}
+
+		var multiData model.MultiData
+		err = json.Unmarshal([]byte(datas[0].MultiId), &multiData)
+		if err != nil {
+			errNo = "1"
+			return
+		}
+
 		c.JSON(http.StatusOK, gin.H{
 			"err_no":     errNo,
 			"route_id":   routeId,
 			"mac":        mac,
 			"ifn":        ifn,
-			"service_id": serviceId,
+			"service_id": multiData.ServiceId,
 		})
 
 	})
