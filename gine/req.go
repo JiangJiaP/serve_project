@@ -57,7 +57,6 @@ func GinInit() {
 		var routeId string
 		var mac string
 		var ifn string
-		var serviceId string
 		errNo := "0"
 		datas, err := mymysql.CIdSearch(cId)
 		if err != nil {
@@ -69,7 +68,6 @@ func GinInit() {
 				routeId = datas[0].RouteId
 				mac = datas[0].MacId
 				ifn = datas[0].Ifn
-				serviceId = datas[0].ServiceId
 			}
 		}
 
