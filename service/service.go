@@ -15,6 +15,19 @@ func decodeMultiData(jsonData string) (model.MultiData, error) {
 }
 
 func ConnectServicePost(scidInfo model.Data, dcidInfo model.Data, url string) (errno string) {
+	var sMultiData model.MultiData
+	err := json.Unmarshal([]byte(scidInfo.MultiId), &sMultiData)
+	if err != nil {
+		errno = "400"
+		return
+	}
+
+	var dMultiData model.MultiData
+	err = json.Unmarshal([]byte(scidInfo.MultiId), &dMultiData)
+	if err != nil {
+		errno = "400"
+		return
+	}
 
 	requestData := map[string]interface{}{
 		"datas": []map[string]string{
@@ -23,14 +36,14 @@ func ConnectServicePost(scidInfo model.Data, dcidInfo model.Data, url string) (e
 				"route_id": scidInfo.RouteId,
 				"mac":      scidInfo.MacId,
 				"ifn":      scidInfo.Ifn,
-				"service_id": scidInfo.ServiceId,
+				"service_id": sMultiData.ServiceId,
 			},
 			{
 				"cid":      dcidInfo.CId,
 				"route_id": dcidInfo.RouteId,
 				"mac":      dcidInfo.MacId,
 				"ifn":      dcidInfo.Ifn,
-				"service_id": dcidInfo.ServiceId,
+				"service_id": dMultiData.ServiceId,
 			},
 		},
 		"err_no": "",
