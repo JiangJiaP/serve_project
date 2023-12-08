@@ -23,7 +23,7 @@ func ConnectServicePost(scidInfo model.Data, dcidInfo model.Data, url string) (e
 	}
 
 	var dMultiData model.MultiData
-	err = json.Unmarshal([]byte(scidInfo.MultiId), &dMultiData)
+	err = json.Unmarshal([]byte(dcidInfo.MultiId), &dMultiData)
 	if err != nil {
 		errno = "400"
 		return
