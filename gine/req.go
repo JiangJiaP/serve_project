@@ -75,7 +75,6 @@ func GinInit() {
 		err = json.Unmarshal([]byte(datas[0].MultiId), &multiData)
 		if err != nil {
 			errNo = "1"
-			return
 		}
 
 		c.JSON(http.StatusOK, gin.H{
